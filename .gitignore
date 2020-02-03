@@ -1,2 +1,5 @@
 .idea
+.VSCode
 venv
+backend/backend/__pycache__
+backend/customer/__pycache__
