@@ -1,5 +1,7 @@
 .idea
 .VSCode
 venv
+backend/images/
+backend/customer/migrations/
 backend/backend/__pycache__
 backend/customer/__pycache__

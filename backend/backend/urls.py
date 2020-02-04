@@ -24,5 +24,5 @@ urlpatterns = [
     path('auth/', include('djoser.urls.jwt')),
 	
 	#api endpoints
-    path("api/",include("customer.urls"))
+    path("api/",include("contest.urls"))
 ]
