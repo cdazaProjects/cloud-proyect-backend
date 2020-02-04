@@ -1,0 +1,27 @@
+uwsgi:
+  master: True
+  ignore-sigpipe: True
+  thunder-lock: True
+  vacuum: True
+  reaper: True
+  gevent: 3000
+  #harakiri: 63
+  socket: /tmp/uwsgi.sock
+  http-socket: 0.0.0.0:80
+  #workers: 4
+  enable-threads: True
+  single-interpreter: True
+  #http-timeout: 59
+  min-worker-lifetime: 120
+  max-worker-lifetime: 7200
+  #max-requests: 1000
+  #max-requests-delta: 100
+  #cheap: True
+  #cheaper-initial: 2
+  #cheaper-step: 2
+  post-buffering: True
+  post-buffering-bufsize: 8192
+  disable-logging: True
+  env: LANG=en_US.UTF-8
+  chdir: /srv/www/backend/backend
+  module: backend.wsgi:application

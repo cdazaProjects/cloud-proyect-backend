@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'contest',
     'rest_framework',
     'rest_framework_simplejwt',
+    'video_encoding',
+    'djrill',
+    'celery',
 ]
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
@@ -149,3 +152,31 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+VIDEO_ENCODING_FORMATS = {
+    'FFmpeg': [
+        {
+            'name': 'webm_sd',
+            'extension': 'webm',
+            'params': [
+                '-b:v', '1000k', '-maxrate', '1000k', '-bufsize', '2000k',
+                '-codec:v', 'libvpx', '-r', '30',
+                '-vf', 'scale=-1:480', '-qmin', '10', '-qmax', '42',
+                '-codec:a', 'libvorbis', '-b:a', '128k', '-f', 'webm',
+            ],
+        },
+    ]
+}
+
+# -- Celery
+CELERY_TIMEZONE = 'UTC'
+CELERY_ENABLE_UTC = True
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_PERSISTENT = True
+CELERY_DEFAULT_DELIVERY_MODE = 'persistent'
+CELERYBEAT_SCHEDULER = {}
+RABBIT_IP = os.environ.get('RABBIT_IP')
+RABBIT_PORT = os.environ.get('RABBIT_PORT')
+AMQP_HOST = '%s:%s' % (RABBIT_IP, RABBIT_PORT)
+BROKER_URL = 'amqp://guest:guest@%s//' % AMQP_HOST
