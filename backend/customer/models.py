@@ -1,38 +1,42 @@
 from django.db import models
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
+class UserManager(BaseUserManager):
 
-class Customer(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE,related_name="customer")    
+    use_in_migrations = True
 
-    def __str__(self):
-        return self.user
+    def _create_user(self, email, password, **extra_fields):
+        if not email:
+            raise ValueError('The given email must be set')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-# Signal (For user inherited model "customer" creation)
-@receiver(post_save, sender=User)
-def create_profile(sender, instance, created, **kwargs):
-    if created:
-        customer.objects.create(user=instance)
+    def create_user(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(email, password, **extra_fields)
 
+    def create_superuser(self, email, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
 
-class Contest(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    image_path = models.CharField(max_length=100)
-    url = models.CharField(max_length=100)
-    description = models.TextField()
-    begin_at = models.DateTimeField('date begin')
-    end_at = models.DateTimeField('date end')
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
 
-class Video(models.Model):
-    contest = models.ForeignKey(Contest, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    path = models.CharField(max_length=100)
-    user_email = models.CharField(max_length=100)
-    user_name = models.CharField(max_length=100)
-    user_lastname = models.CharField(max_length=100)
-    status = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+        return self._create_user(email, password, **extra_fields)
+
+class User(AbstractUser):
+    username = None
+    email = models.EmailField(_('email address'), unique=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = UserManager()
