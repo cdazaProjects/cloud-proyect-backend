@@ -105,8 +105,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'project',
-        'USER': 'test',
-        'PASSWORD': 'test',
+        'USER': 'postgres',
+        'PASSWORD': 'kta890908',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -180,3 +180,10 @@ RABBIT_IP = os.environ.get('RABBIT_IP')
 RABBIT_PORT = os.environ.get('RABBIT_PORT')
 AMQP_HOST = '%s:%s' % (RABBIT_IP, RABBIT_PORT)
 BROKER_URL = 'amqp://guest:guest@%s//' % AMQP_HOST
+
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'cloudandes'
+EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_HOST_PASSWORD")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

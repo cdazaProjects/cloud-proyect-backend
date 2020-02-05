@@ -1,20 +1,22 @@
 import jwt
-from rest_framework.generics import ListCreateAPIView,RetrieveUpdateDestroyAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
-from .models import Contest,Video
+from .models import Contest, Video
 from .serializers import ContestSerializer, VideoSerializer
+from django.core.mail import send_mail
+
 
 # Create your views here.
 
 # Contest
 class ContestListCreateView(ListCreateAPIView):
-    permission_classes=[IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, format=None):
-        contest = Contest.objects.all()
+        contest = Contest.objects.all().filter(user__id=request.user.id)
         serializer = ContestSerializer(contest, many=True)
         return Response(serializer.data)
 
@@ -28,8 +30,10 @@ class ContestListCreateView(ListCreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class ContestDetailView(RetrieveUpdateDestroyAPIView):
-    permission_classes=[IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+
     def get_object(self, pk):
         try:
             return Contest.objects.get(pk=pk)
@@ -54,9 +58,11 @@ class ContestDetailView(RetrieveUpdateDestroyAPIView):
         contest.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 # Video
 class VideoListCreateView(ListCreateAPIView):
-    permission_classes=[IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, format=None):
         video = Video.objects.all()
         serializer = VideoSerializer(video, many=True)
@@ -69,8 +75,10 @@ class VideoListCreateView(ListCreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class VideoDetailView(RetrieveUpdateDestroyAPIView):
-    permission_classes=[IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+
     def get_object(self, pk):
         try:
             return Video.objects.get(pk=pk)
@@ -94,4 +102,22 @@ class VideoDetailView(RetrieveUpdateDestroyAPIView):
         video = self.get_object(pk)
         video.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-        
+
+
+class UpdateVideoStatus(ListCreateAPIView):
+    def post(self, request):
+        video = Video.objects.get(id=request.data["id"])
+        video.status = "Completed";
+        video.save()
+
+
+class SendEmail(ListCreateAPIView):
+    def post(self, request):
+        #video = Video.objects.get(id=request.data["id"])
+        #contest = video.contest
+        send_mail('SmartTools - Video Cargado para conscurso',
+                  'El video subido para el concurso '+ #+ contest.name +
+                  ' ha sido cargado con exito. Puede ingresar a verlo en https://0.0.0.0:8080/',# + contest.name,
+                  'c.cordobac@uniandes.edu.co',
+                  ['cata.cordoba8@gmail.com'],
+                  fail_silently=False)
