@@ -16,7 +16,9 @@ class ContestListCreateView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        contest = Contest.objects.all().filter(user__id=request.user.id)
+        token = request.META.get('HTTP_AUTHORIZATION', " ").split(' ')[1]
+        token_decoded = jwt.decode(token, None, None)
+        contest = Contest.objects.all().filter(user__id=token_decoded["user_id"])
         serializer = ContestSerializer(contest, many=True)
         return Response(serializer.data)
 
@@ -63,8 +65,8 @@ class ContestDetailView(RetrieveUpdateDestroyAPIView):
 class VideoListCreateView(ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, format=None):
-        video = Video.objects.all()
+    def get(self, request, pk, format=None):
+        video = Video.objects.all().filter(contest__id=pk)
         serializer = VideoSerializer(video, many=True)
         return Response(serializer.data)
 
@@ -104,20 +106,19 @@ class VideoDetailView(RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class UpdateVideoStatus(ListCreateAPIView):
+class UpdateVideoStatusAndSendEmail(ListCreateAPIView):
     def post(self, request):
-        video = Video.objects.get(id=request.data["id"])
+        video = Video.objects.get(pk=request.data["id"])
         video.status = "Completed";
         video.save()
-
-
-class SendEmail(ListCreateAPIView):
-    def post(self, request):
-        #video = Video.objects.get(id=request.data["id"])
-        #contest = video.contest
+        contest = video.contest
+        print(contest.user.email)
         send_mail('SmartTools - Video Cargado para conscurso',
-                  'El video subido para el concurso '+ #+ contest.name +
-                  ' ha sido cargado con exito. Puede ingresar a verlo en https://0.0.0.0:8080/',# + contest.name,
+                  'El video subido para el concurso ' + contest.name +
+                  ' ha sido cargado con exito. Puede ingresar a verlo en ' + contest.url,
                   'c.cordobac@uniandes.edu.co',
-                  ['cata.cordoba8@gmail.com'],
+                  [contest.user.email],
                   fail_silently=False)
+        return Response(status=status.HTTP_200_OK)
+
+

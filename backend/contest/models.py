@@ -23,4 +23,4 @@ class Video(models.Model):
     duration = models.FloatField(editable=False, null=True)
     file = VideoField(width_field='width', height_field='height', duration_field='duration')
     format_set = GenericRelation(Format)
-    status = models.CharField(max_length=50)
+    status = models.CharField(max_length=50, null=True)
