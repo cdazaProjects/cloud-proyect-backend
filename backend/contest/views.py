@@ -9,6 +9,7 @@ from .serializers import ContestSerializer, VideoSerializer
 from django.core.mail import send_mail
 
 
+
 # Create your views here.
 
 # Contest
@@ -18,7 +19,7 @@ class ContestListCreateView(ListCreateAPIView):
     def get(self, request, format=None):
         token = request.META.get('HTTP_AUTHORIZATION', " ").split(' ')[1]
         token_decoded = jwt.decode(token, None, None)
-        contest = Contest.objects.all().filter(user__id=token_decoded["user_id"])
+        contest = Contest.objects.filter(user__id=token_decoded["user_id"])
         serializer = ContestSerializer(contest, many=True)
         return Response(serializer.data)
 
@@ -74,6 +75,7 @@ class VideoListCreateView(ListCreateAPIView):
         serializer = VideoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
