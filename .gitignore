@@ -3,5 +3,7 @@
 venv
 backend/images/
 backend/customer/migrations/
+backend/contest/migrations/
 backend/backend/__pycache__
 backend/customer/__pycache__
+backend/contest/__pycache__
