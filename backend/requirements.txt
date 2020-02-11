@@ -12,3 +12,4 @@ PyJWT==1.7.1
 pytz==2019.3
 soupsieve==1.9.5
 sqlparse==0.3.0
+eventlet==0.23.0
