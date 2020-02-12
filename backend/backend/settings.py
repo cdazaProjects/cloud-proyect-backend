@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'video_encoding',
     'djrill',
     'celery',
+    'django_celery_beat',
 ]
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
