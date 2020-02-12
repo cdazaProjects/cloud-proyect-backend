@@ -6,6 +6,7 @@ from video_encoding.admin import FormatInline
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
+   inlines: (FormatInline,)
    list_display = ('file', 'contest', 'duration', 'height', 'width')
    fields = ('file', 'contest')
 

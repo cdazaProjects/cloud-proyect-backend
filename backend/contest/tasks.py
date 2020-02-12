@@ -7,6 +7,7 @@ from contest.models import Video
 @app.task()
 def convert_video():
     videos_to_convert = Video.objects.all()
+    print(videos_to_convert)
     app_label = videos_to_convert.first()._meta.app_label
     model_name = videos_to_convert.first()._meta.model_name
     for video in videos_to_convert:
