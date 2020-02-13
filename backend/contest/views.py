@@ -26,12 +26,10 @@ class ContestListCreateView(ListCreateAPIView):
     def post(self, request, format=None):
         token = request.META.get('HTTP_AUTHORIZATION', " ").split(' ')[1]
         token_decoded = jwt.decode(token, None, None)
-        request.data["user"] = token_decoded["user_id"]
-        serializer = ContestSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        data = request.data.dict()
+        data['user'] = token_decoded["user_id"]
+        new_content = Contest.objects.create(**data)
+        return Response(ContestSerializer(new_content).data, status=status.HTTP_201_CREATED)
 
 
 class ContestDetailView(RetrieveUpdateDestroyAPIView):
