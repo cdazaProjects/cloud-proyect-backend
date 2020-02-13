@@ -106,8 +106,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'project',
-        'USER': 'postgres',
-        'PASSWORD': 'kta890908',
+        'USER': 'test',
+        'PASSWORD': 'test',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -156,13 +156,13 @@ STATIC_URL = '/static/'
 VIDEO_ENCODING_FORMATS = {
     'FFmpeg': [
         {
-            'name': 'webm_sd',
-            'extension': 'webm',
+            'name': 'mp4_sd',
+            'extension': 'mp4',
             'params': [
+                '-codec:v', 'libx264', '-crf', '20', '-preset', 'medium',
                 '-b:v', '1000k', '-maxrate', '1000k', '-bufsize', '2000k',
-                '-codec:v', 'libvpx', '-r', '30',
-                '-vf', 'scale=-1:480', '-qmin', '10', '-qmax', '42',
-                '-codec:a', 'libvorbis', '-b:a', '128k', '-f', 'webm',
+                '-vf', 'scale=-2:480',
+                '-codec:a', 'aac', '-b:a', '128k', '-strict', '-2',
             ],
         },
     ]
