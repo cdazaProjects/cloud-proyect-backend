@@ -3,7 +3,4 @@
 venv
 __pycache__
 venv2
-backend/contest/migrations
-backend/temp/
-backend/customer/migrations/
 images/
