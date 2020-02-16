@@ -1,4 +1,5 @@
 import jwt
+from rest_framework.decorators import permission_classes
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -70,13 +71,15 @@ class ContestDetailView(RetrieveUpdateDestroyAPIView):
 
 # Video
 class VideoListCreateView(APIView):
-    permission_classes = [IsAuthenticated]
 
     def get(self, request, pk, format=None):
-        video = Video.objects.all().filter(contest__id=pk)
-        serializer = VideoSerializer(video, many=True)
+        videos = Video.objects.filter(contest__id=pk)
+        if request.user.is_anonymous:
+            videos = videos.filter(status="Convertido")
+        serializer = VideoSerializer(videos, many=True)
         return Response(serializer.data)
 
+    @permission_classes([IsAuthenticated])
     def post(self, request, pk, format=None):
         contest = Contest.objects.get(id=pk)
         data = request.data.dict()
@@ -113,19 +116,6 @@ class VideoDetailView(RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class UpdateVideoStatusAndSendEmail(ListCreateAPIView):
-    def post(self, request):
-        video = Video.objects.get(pk=request.data["id"])
-        video.status = "Completed";
-        video.save()
-        contest = video.contest
-        print(contest.user.email)
-        send_mail('SmartTools - Video Cargado para conscurso',
-                  'El video subido para el concurso ' + contest.name +
-                  ' ha sido cargado con exito. Puede ingresar a verlo en ' + contest.url,
-                  'c.cordobac@uniandes.edu.co',
-                  [contest.user.email],
-                  fail_silently=False)
-        return Response(status=status.HTTP_200_OK)
+
 
 
