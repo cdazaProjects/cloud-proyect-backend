@@ -3,13 +3,13 @@ from customer.models import User
 from django.contrib.contenttypes.fields import GenericRelation
 from video_encoding.fields import VideoField
 from video_encoding.models import Format
-
+from django.core.validators import FileExtensionValidator
 
 # Create your models here.
 class Contest(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    image_path = models.ImageField(upload_to='images/', max_length=100)
+    image_path = models.ImageField(upload_to='images/', validators=[FileExtensionValidator(['png'])])
     url = models.CharField(max_length=100)
     description = models.TextField()
     begin_at = models.DateTimeField('date begin')
