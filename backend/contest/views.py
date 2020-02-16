@@ -4,6 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
+from rest_framework.views import APIView
+
 from .models import Contest, Video
 from .serializers import ContestSerializer, VideoSerializer
 from django.core.mail import send_mail
@@ -67,7 +69,7 @@ class ContestDetailView(RetrieveUpdateDestroyAPIView):
 
 
 # Video
-class VideoListCreateView(ListCreateAPIView):
+class VideoListCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, pk, format=None):
@@ -75,13 +77,12 @@ class VideoListCreateView(ListCreateAPIView):
         serializer = VideoSerializer(video, many=True)
         return Response(serializer.data)
 
-    def post(self, request, format=None):
-        serializer = VideoSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, pk, format=None):
+        contest = Contest.objects.get(id=pk)
+        data = request.data.dict()
+        data['contest']= contest
+        video = Video.objects.create(**data)
+        return Response(VideoSerializer(video).data, status=status.HTTP_201_CREATED)
 
 
 class VideoDetailView(RetrieveUpdateDestroyAPIView):

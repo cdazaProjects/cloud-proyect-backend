@@ -24,3 +24,5 @@ class Video(models.Model):
     file = VideoField(width_field='width', height_field='height', duration_field='duration')
     format_set = GenericRelation(Format)
     status = models.CharField(max_length=50, null=True, default='En Proceso')
+    comment = models.CharField(max_length=1000, null=True)
+    email = models.EmailField(blank=False, null=False)
