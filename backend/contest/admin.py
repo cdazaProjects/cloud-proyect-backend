@@ -6,8 +6,10 @@ from video_encoding.admin import FormatInline
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-   list_display = ('file', 'contest', 'duration', 'height', 'width')
-   fields = ('file', 'contest')
+   inlines = (FormatInline,)
+   list_dispaly = ('get_filename', 'width', 'height', 'duration','contest')
+   fields = ('width', 'height', 'duration')
+   readonly_fields = fields
 
 
 admin.site.register(Contest)

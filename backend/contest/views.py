@@ -7,8 +7,8 @@ from django.http import Http404
 from .models import Contest, Video
 from .serializers import ContestSerializer, VideoSerializer
 from django.core.mail import send_mail
-
-
+from customer.models import User
+from datetime import datetime
 
 # Create your views here.
 
@@ -26,12 +26,13 @@ class ContestListCreateView(ListCreateAPIView):
     def post(self, request, format=None):
         token = request.META.get('HTTP_AUTHORIZATION', " ").split(' ')[1]
         token_decoded = jwt.decode(token, None, None)
-        request.data["user"] = token_decoded["user_id"]
-        serializer = ContestSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        data = request.data.dict()
+        usr = User.objects.get(id=token_decoded["user_id"])
+        data['user'] = usr
+        data['begin_at'] = datetime.strptime(data['begin_at'], '%Y-%m-%d %H:%M:%S')
+        data['end_at'] = datetime.strptime(data['end_at'], '%Y-%m-%d %H:%M:%S')
+        new_content = Contest.objects.create(**data)
+        return Response(ContestSerializer(new_content).data, status=status.HTTP_201_CREATED)
 
 
 class ContestDetailView(RetrieveUpdateDestroyAPIView):
@@ -50,7 +51,10 @@ class ContestDetailView(RetrieveUpdateDestroyAPIView):
 
     def put(self, request, pk, format=None):
         contest = self.get_object(pk)
-        serializer = ContestSerializer(contest, data=request.data)
+        data = request.data.dict()
+        data['begin_at'] = datetime.strptime(data['begin_at'], '%Y-%m-%d %H:%M:%S')
+        data['end_at'] = datetime.strptime(data['end_at'], '%Y-%m-%d %H:%M:%S')
+        serializer = ContestSerializer(contest, data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
