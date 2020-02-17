@@ -5,3 +5,4 @@ __pycache__
 venv2
 images/
 venv3
+*.avi
