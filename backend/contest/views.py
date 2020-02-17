@@ -38,6 +38,13 @@ class ContestListCreateView(ListCreateAPIView):
         return Response(ContestSerializer(new_content).data, status=status.HTTP_201_CREATED)
 
 
+class ContestDetailByURLView(APIView):
+    def get(self, request, format=None):
+        url = request.url
+        contest = Contest.objects.get(url=url)
+        return Response(ContestSerializer(contest).data, status=status.HTTP_200_OK)
+
+
 class ContestDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
