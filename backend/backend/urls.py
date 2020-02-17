@@ -18,13 +18,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path,include
 
+from contest.views import ContestDetailByURLView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     #path to djoser end points
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
-	
+    path(r'^public/contest/$', ContestDetailByURLView.as_view()),
 	#api endpoints
     path("api/",include("contest.urls"))
 ]
