@@ -28,3 +28,4 @@ class Video(models.Model):
     comment = models.CharField(max_length=1000, null=False)
     email = models.EmailField(blank=False, null=False)
     user_name = models.CharField(max_length=255, null=False)
+    last_name = models.CharField(max_length=255, null=False)

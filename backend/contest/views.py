@@ -87,10 +87,10 @@ class VideoListCreateView(APIView):
         return Response(serializer.data)
 
     @permission_classes([IsAuthenticated])
-    def post(self, request, pk, format=None):
-        contest = Contest.objects.get(id=pk)
+    def post(self, request, format=None):
         data = request.data.dict()
-        data['contest']= contest
+        contest = Contest.objects.get(id=data['contest'])
+        data['contest'] = contest
         video = Video.objects.create(**data)
         return Response(VideoSerializer(video).data, status=status.HTTP_201_CREATED)
 
