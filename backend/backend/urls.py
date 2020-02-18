@@ -26,7 +26,7 @@ urlpatterns = [
     #path to djoser end points
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
-    url(r'^public/contest/$', ContestDetailByURLView.as_view()),
+    path('public/contest/<str:url>', ContestDetailByURLView.as_view()),
 	#api endpoints
     path("api/",include("contest.urls"))
 ]

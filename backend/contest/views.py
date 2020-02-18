@@ -39,8 +39,8 @@ class ContestListCreateView(ListCreateAPIView):
 
 
 class ContestDetailByURLView(APIView):
-    def get(self, request, format=None):
-        url = request.url
+    def get(self, request, url, format=None):
+        url = request.build_absolute_uri()
         contest = Contest.objects.get(url=url)
         return Response(ContestSerializer(contest).data, status=status.HTTP_200_OK)
 
