@@ -23,7 +23,7 @@ def convert_video(video_id, app_label, model_name):
 
 
 @app.task(queue='check')
-def convert_video():
+def check_videos():
     videos_in_converting_process = Video.objects.filter(status="converting")
     for video in videos_in_converting_process:
         if video.format_set.complete().all().exists():
