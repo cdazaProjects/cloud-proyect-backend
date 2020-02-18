@@ -96,7 +96,6 @@ class VideoListCreateView(APIView):
 
 
 class VideoDetailView(RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
 
     def get_object(self, pk):
         try:
@@ -109,6 +108,7 @@ class VideoDetailView(RetrieveUpdateDestroyAPIView):
         serializer = VideoSerializer(video)
         return Response(serializer.data)
 
+    @permission_classes([IsAuthenticated])
     def put(self, request, pk, format=None):
         video = self.get_object(pk)
         serializer = VideoSerializer(video, data=request.data)
@@ -117,6 +117,7 @@ class VideoDetailView(RetrieveUpdateDestroyAPIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @permission_classes([IsAuthenticated])
     def delete(self, request, pk, format=None):
         video = self.get_object(pk)
         video.delete()
