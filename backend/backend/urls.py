@@ -17,17 +17,17 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include
 
 from contest.views import ContestDetailByURLView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path to djoser end points
+    # path to djoser end points
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('public/contest/<str:url>', ContestDetailByURLView.as_view()),
-	#api endpoints
-    path("api/",include("contest.urls"))
+    # api endpoints
+    path("api/", include("contest.urls"))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

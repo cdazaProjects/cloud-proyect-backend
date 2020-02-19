@@ -40,9 +40,11 @@ class ContestListCreateView(ListCreateAPIView):
 
 class ContestDetailByURLView(APIView):
     def get(self, request, url, format=None):
-        url = request.build_absolute_uri()
         contest = Contest.objects.get(url=url)
-        return Response(ContestSerializer(contest).data, status=status.HTTP_200_OK)
+        videos = Video.objects.filter(contest__id=contest.id)
+        videos = videos.filter(status="Convertido")
+        serializer = VideoSerializer(videos, many=True)
+        return Response(serializer.data)
 
 
 class ContestDetailView(RetrieveUpdateDestroyAPIView):
@@ -79,10 +81,10 @@ class ContestDetailView(RetrieveUpdateDestroyAPIView):
 # Video
 class VideoListCreateView(APIView):
 
-    def get(self, request, pk, format=None):
-        videos = Video.objects.filter(contest__id=pk)
-        if request.user.is_anonymous:
-            videos = videos.filter(status="Convertido")
+    @permission_classes([IsAuthenticated])
+    def get(self, request, url, format=None):
+        contest = Contest.objects.get(url=url)
+        videos = Video.objects.filter(contest__id=contest.id)
         serializer = VideoSerializer(videos, many=True)
         return Response(serializer.data)
 

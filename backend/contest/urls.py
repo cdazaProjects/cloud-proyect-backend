@@ -7,6 +7,6 @@ urlpatterns = [
     path("contest",ContestListCreateView.as_view()),
     path("contest/<int:pk>", ContestDetailView.as_view()),
     path("video",VideoListCreateView.as_view()),
-    path("videoContest/<int:pk>",VideoListCreateView.as_view()),
+    path("videoContest/<str:url>",VideoListCreateView.as_view()),
     path("video/<int:pk>",VideoDetailView.as_view()),
 ]
