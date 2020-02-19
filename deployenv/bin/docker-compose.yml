@@ -37,6 +37,7 @@ services:
     command: /srv/www/bin/celery.sh
     depends_on:
       - database
+      - rabbit
   # rabbit ---------------------------------------------------------------------
   rabbit:
     image: rabbitmq:3
@@ -74,3 +75,5 @@ services:
     ports:
       - "${FLOWER_IP}:${FLOWER_HTTP_PORT}:80"
     command: /srv/www/bin/flower.sh
+    depends_on:
+      - rabbit

@@ -194,7 +194,7 @@ CELERYBEAT_SCHEDULE = {
 RABBIT_IP = os.environ.get('RABBIT_IP')
 RABBIT_PORT = os.environ.get('RABBIT_PORT')
 AMQP_HOST = '%s:%s' % (RABBIT_IP, RABBIT_PORT)
-BROKER_URL = 'amqp://guest:guest@%s' % AMQP_HOST
+BROKER_URL = 'amqp://guest:guest@rabbit//'
 
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 EMAIL_HOST = 'smtp.sendgrid.net'
