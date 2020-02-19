@@ -45,9 +45,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'video_encoding',
+    'djcelery',
     'djrill',
     'celery',
     'django_celery_beat',
+    'django_celery_results',
+    'django_extensions'
 ]
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None

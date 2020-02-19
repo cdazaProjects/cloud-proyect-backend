@@ -31,10 +31,10 @@ start-environment-compose:
 	echo "ENVIRONMENT=$(environment)" >> .env && \
 	docker-compose config && \
 	docker-compose -f docker-compose.yml -f env-compose.yml -p backend-$(environment) up -d --force-recreate
-	rm -rf temp
 
 clear-environment-containers:
 	docker stop backend-$(environment) && docker rm backend-$(environment) || true
 	docker stop backend-$(environment)-celery && docker rm backend-$(environment)-celery || true
 	docker stop rabbit-$(environment) && docker rm rabbit-$(environment) || true
-	docker stop backend-$(environment)-flower && docker rm backend-flower-$(environment)-flower || true
+	docker stop backend-$(environment)-flower && docker rm backend-$(environment)-flower || true
+	docker stop postgres-$(environment) && docker rm postgres-$(environment) || true
