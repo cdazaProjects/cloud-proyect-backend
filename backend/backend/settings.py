@@ -26,7 +26,7 @@ SECRET_KEY = '&*b%yee(5maoi_z%f04kw0c!ayjo9d2msd+(fk9s&n3v+!bt#8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -106,10 +106,20 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': 'database',
     }
 }
 # Password validation
@@ -174,11 +184,17 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_PERSISTENT = True
 CELERY_DEFAULT_DELIVERY_MODE = 'persistent'
-CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
+CELERYBEAT_SCHEDULE = {
+    "runs-every-30-seconds": {
+        "task": "contest.tasks.convert_videos",
+        "schedule": timedelta(seconds=30),
+        "args": ()
+    },
+}
 RABBIT_IP = os.environ.get('RABBIT_IP')
 RABBIT_PORT = os.environ.get('RABBIT_PORT')
 AMQP_HOST = '%s:%s' % (RABBIT_IP, RABBIT_PORT)
-BROKER_URL = 'amqp://guest:guest@%s//' % AMQP_HOST
+BROKER_URL = 'amqp://localhost'
 
 SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
 EMAIL_HOST = 'smtp.sendgrid.net'
