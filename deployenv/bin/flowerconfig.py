@@ -1,7 +1,7 @@
 import os
 
 # Setup RabitMQ
-BROKER_URL = 'amqp://guest:guest@rabbit//'.format(":".join([os.environ.get(a) for a in ['RABBIT_IP', 'RABBIT_PORT']]))
+BROKER_URL = 'amqp://guest:guest@rabbit//'
 
 
 # Setup Address
