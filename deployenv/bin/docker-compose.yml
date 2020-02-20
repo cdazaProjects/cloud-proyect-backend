@@ -18,6 +18,8 @@ services:
     env_file: .env
     depends_on:
       - database
+    volumes:
+      - media:/srv/www/backend/backend/media
   # django celery ---------------------------------------------------------------------
   celery:
     image: "backend-${ENVIRONMENT}-${CURRENT_BRANCH}-${COMMIT_HASH}"
@@ -35,6 +37,8 @@ services:
     ports:
       - "${CELERY_IP}:${CELERY_HTTP_PORT}:80"
     command: /srv/www/bin/celery.sh
+    volumes:
+      - media:/srv/www/backend/backend/media
     depends_on:
       - database
       - rabbit
@@ -79,3 +83,5 @@ services:
     command: /srv/www/bin/flower.sh
     depends_on:
       - rabbit
+    volumes:
+      - media:/srv/www/backend/backend/media
