@@ -9,12 +9,13 @@ from contest.models import Video
 @app.task(queue='father')
 def convert_videos():
     videos_to_convert = Video.objects.filter(status="En Proceso")
-    app_label = videos_to_convert.first()._meta.app_label
-    model_name = videos_to_convert.first()._meta.model_name
-    for video in videos_to_convert:
-        convert_video.delay(app_label, model_name, video.id)
-        video.status = "converting"
-        video.save()
+    if videos_to_convert.exists():
+        app_label = videos_to_convert.first()._meta.app_label
+        model_name = videos_to_convert.first()._meta.model_name
+        for video in videos_to_convert:
+            convert_video.delay(app_label, model_name, video.id)
+            video.status = "converting"
+            video.save()
 
 
 @app.task(queue='son')
