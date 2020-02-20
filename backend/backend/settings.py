@@ -193,6 +193,11 @@ CELERYBEAT_SCHEDULE = {
         "schedule": timedelta(seconds=30),
         "args": ()
     },
+    "runs-every-31-seconds": {
+        "task": "contest.tasks.check_videos",
+        "schedule": timedelta(seconds=30),
+        "args": ()
+    },
 }
 RABBIT_IP = os.environ.get('RABBIT_IP')
 RABBIT_PORT = os.environ.get('RABBIT_PORT')
