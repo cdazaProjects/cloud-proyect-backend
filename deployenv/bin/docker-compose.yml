@@ -19,7 +19,7 @@ services:
     depends_on:
       - database
     volumes:
-      - media:/srv/www/backend/backend/media
+      - media:/data/media
   # django celery ---------------------------------------------------------------------
   celery:
     image: "backend-${ENVIRONMENT}-${CURRENT_BRANCH}-${COMMIT_HASH}"
@@ -38,7 +38,7 @@ services:
       - "${CELERY_IP}:${CELERY_HTTP_PORT}:80"
     command: /srv/www/bin/celery.sh
     volumes:
-      - media:/srv/www/backend/backend/media
+      - media:/data/media
     depends_on:
       - database
       - rabbit
@@ -84,6 +84,6 @@ services:
     depends_on:
       - rabbit
     volumes:
-      - media:/srv/www/backend/backend/media
+      - media:/data/media
 volumes:
-  media:
+  media: {}
