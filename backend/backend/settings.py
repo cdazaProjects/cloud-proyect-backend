@@ -15,7 +15,7 @@ from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+PROJECT_ROOT = os.path.normpath(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -205,3 +205,6 @@ EMAIL_HOST_USER = 'cloudandes'
 EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_HOST_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+FRONT_URL = "http://localhost:4200/"
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_URL = '/static/'
