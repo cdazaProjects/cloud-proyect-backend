@@ -32,6 +32,8 @@ class ContestListCreateView(ListCreateAPIView):
         data = request.data.dict()
         usr = User.objects.get(id=token_decoded["user_id"])
         data['user'] = usr
+        data['begin_at'] = data['begin_at'][:-2] + '20'
+        data['end_at'] = data['end_at'][:-2] + '20'
         data['begin_at'] = datetime.strptime(data['begin_at'], '%Y-%m-%d %H:%M:%S')
         data['end_at'] = datetime.strptime(data['end_at'], '%Y-%m-%d %H:%M:%S')
         new_content = Contest.objects.create(**data)
@@ -64,6 +66,8 @@ class ContestDetailView(RetrieveUpdateDestroyAPIView):
     def put(self, request, pk, format=None):
         contest = self.get_object(pk)
         data = request.data.dict()
+        data['begin_at'] = data['begin_at'][:-2] + '20'
+        data['end_at'] = data['end_at'][:-2] + '20'
         data['begin_at'] = datetime.strptime(data['begin_at'], '%Y-%m-%d %H:%M:%S')
         data['end_at'] = datetime.strptime(data['end_at'], '%Y-%m-%d %H:%M:%S')
         serializer = ContestSerializer(contest, data=data)
