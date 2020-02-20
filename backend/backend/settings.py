@@ -190,7 +190,7 @@ CELERY_DEFAULT_DELIVERY_MODE = 'persistent'
 CELERYBEAT_SCHEDULE = {
     "runs-every-30-seconds": {
         "task": "contest.tasks.convert_videos",
-        "schedule": timedelta(seconds=30),
+        "schedule": timedelta(seconds=120),
         "args": ()
     },
     "runs-every-31-seconds": {
@@ -204,12 +204,11 @@ RABBIT_PORT = os.environ.get('RABBIT_PORT')
 AMQP_HOST = '%s:%s' % (RABBIT_IP, RABBIT_PORT)
 BROKER_URL = 'amqp://guest:guest@rabbit//'
 
-SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY")
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'cloudandes'
-EMAIL_HOST_PASSWORD = os.environ.get("SENDGRID_HOST_PASSWORD")
-EMAIL_PORT = 587
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'arquimisog3@gmail.com'
+EMAIL_HOST_PASSWORD = 'Pass123.'
 FRONT_URL = "http://localhost:4200/"
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-STATIC_URL = '/static/'
