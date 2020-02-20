@@ -85,3 +85,5 @@ services:
       - rabbit
     volumes:
       - media:/srv/www/backend/backend/media
+volumes:
+  media:
