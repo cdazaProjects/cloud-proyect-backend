@@ -143,7 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 MEDIA_URL = '/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'medias')
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
