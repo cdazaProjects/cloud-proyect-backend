@@ -13,7 +13,7 @@ def convert_videos():
         app_label = videos_to_convert.first()._meta.app_label
         model_name = videos_to_convert.first()._meta.model_name
         for video in videos_to_convert:
-            convert_video.delay(app_label, model_name, video.id)
+            convert_video.delay( video.id, app_label, model_name)
             video.status = "converting"
             video.save()
 
