@@ -160,8 +160,8 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = ' https://docs.djangoproject.com/en/1.8/howto/static-files/'
-STATIC_ROOT = BASE_DIR + '/static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = "/var/www/example.com/static/"
 
 
 VIDEO_ENCODING_FORMATS = {
