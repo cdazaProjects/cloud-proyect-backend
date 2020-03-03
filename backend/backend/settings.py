@@ -190,12 +190,12 @@ CELERY_DEFAULT_DELIVERY_MODE = 'persistent'
 CELERYBEAT_SCHEDULE = {
     "runs-every-30-seconds": {
         "task": "contest.tasks.convert_videos",
-        "schedule": timedelta(seconds=120),
+        "schedule": timedelta(seconds=1200),
         "args": ()
     },
     "runs-every-31-seconds": {
         "task": "contest.tasks.check_videos",
-        "schedule": timedelta(seconds=30),
+        "schedule": timedelta(seconds=1200),
         "args": ()
     },
 }
