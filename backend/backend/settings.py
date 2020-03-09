@@ -204,11 +204,12 @@ RABBIT_PORT = os.environ.get('RABBIT_PORT')
 AMQP_HOST = '%s:%s' % (RABBIT_IP, RABBIT_PORT)
 BROKER_URL = 'amqp://guest:guest@rabbit//'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.environ.get('AWS_ACCESS_KEY_ID')
+EMAIL_HOST_PASSWORD = os.environ.get('AWS_SECRET_ACCESS_KEY')
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'arquimisog3@gmail.com'
-EMAIL_HOST_PASSWORD = 'Pass123.'
+
 FRONT_URL = "http://localhost:4200/"
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
