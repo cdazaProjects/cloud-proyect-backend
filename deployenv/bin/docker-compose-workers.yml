@@ -42,8 +42,6 @@ services:
     ports:
       - "${FLOWER_IP}:${FLOWER_HTTP_PORT}:80"
     command: /srv/www/bin/flower.sh
-    depends_on:
-      - rabbit
     volumes:
       - medias:/home/ec2-user/efs
 
