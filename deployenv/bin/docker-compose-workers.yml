@@ -21,8 +21,6 @@ services:
     command: /srv/www/bin/celery.sh
     volumes:
       - medias:/home/ec2-user/efs
-    depends_on:
-      - database
     # flower ---------------------------------------------------------------------
   flower:
     image: "backend-${ENVIRONMENT}-${CURRENT_BRANCH}-${COMMIT_HASH}"
