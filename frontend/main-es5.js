@@ -1144,7 +1144,7 @@
     /*! tslib */
     "./node_modules/tslib/tslib.es6.js");
 
-    const API_URL = 'http://35.172.226.103:8000/';
+    const API_URL = 'http://ec2-3-88-107-207.compute-1.amazonaws.com:8000/';
     /***/
   },
 
