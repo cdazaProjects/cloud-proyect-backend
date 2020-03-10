@@ -80,7 +80,6 @@ eventlet==0.23.0
 django-celery==3.2.2
 ptyprocess==0.6.0
 pycparser==2.19
-pycurl==7.43.0.5
 Pygments==2.5.2
 PyJWT==1.7.1
 pymongo==3.10.1
@@ -108,3 +107,4 @@ webencodings==0.5.1
 zipp==0.6.0
 django-cors-headers==3.2.1
 uWSGI==2.0.17
+django-smtp-ssl==1.0
