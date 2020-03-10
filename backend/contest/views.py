@@ -88,7 +88,7 @@ class VideoListCreateView(APIView):
     @permission_classes([IsAuthenticated])
     def get(self, request, url, format=None):
         contest = Contest.objects.get(url=url)
-        videos = Video.objects.filter(contest__id=contest.id)
+        videos = Video.objects.filter(contest__id=contest.id).order_by('-pk')
         serializer = VideoSerializer(videos, many=True)
         return Response(serializer.data)
 

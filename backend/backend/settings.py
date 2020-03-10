@@ -202,7 +202,7 @@ CELERYBEAT_SCHEDULE = {
 RABBIT_IP = os.environ.get('RABBIT_IP')
 RABBIT_PORT = os.environ.get('RABBIT_PORT')
 AMQP_HOST = '%s:%s' % (RABBIT_IP, RABBIT_PORT)
-BROKER_URL = 'amqp://guest:guest@rabbit//'
+BROKER_URL ='sqs://'
 
 EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'
