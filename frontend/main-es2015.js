@@ -719,7 +719,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "API_URL", function() { return API_URL; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 
-const API_URL = 'http://0.0.0.0:8000/';
+const API_URL = 'http://ec2-54-172-208-45.compute-1.amazonaws.com:8000/';
 
 
 /***/ }),
