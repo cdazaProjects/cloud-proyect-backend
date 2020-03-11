@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Contest, Video
+from .models import Contest, Video, TaskManager
 from video_encoding.admin import FormatInline
 # Register your models here.
 
@@ -12,3 +12,4 @@ class VideoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Contest)
+admin.site.register(TaskManager)
