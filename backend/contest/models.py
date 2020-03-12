@@ -29,3 +29,9 @@ class Video(models.Model):
     email = models.EmailField(blank=False, null=False)
     user_name = models.CharField(max_length=255, null=False)
     last_name = models.CharField(max_length=255, null=False)
+
+
+class TaskManager(models.Model):
+    task_name = models.CharField(max_length=50, null=False)
+    begin_at = models.DateTimeField('date begin', auto_now_add=True)
+    end_at = models.DateTimeField('date end')

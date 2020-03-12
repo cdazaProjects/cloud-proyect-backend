@@ -1,14 +1,17 @@
+from datetime import datetime
+
 from django.conf import settings
 from django.core.mail import send_mail
 
 from backend.celery import app
 from video_encoding.tasks import convert_all_videos
 
-from contest.models import Video
+from contest.models import Video, TaskManager
 
 
 @app.task(queue='father')
 def convert_videos():
+
     videos_to_convert = Video.objects.filter(status="En Proceso")
     if videos_to_convert.exists():
         app_label = videos_to_convert.first()._meta.app_label
@@ -21,7 +24,9 @@ def convert_videos():
 
 @app.task(queue='son')
 def convert_video(video_id, app_label, model_name):
+    task_manager = TaskManager.objects.create(task_name='convert video: ' + video_id)
     convert_all_videos(app_label, model_name, video_id)
+    task_manager.end_date = datetime.now()
 
 
 @app.task(queue='check')

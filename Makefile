@@ -62,7 +62,7 @@ start-environment-worker:
 	echo "CURRENT_BRANCH="$$CURRENT_BRANCH >> .env && \
 	echo "ENVIRONMENT=$(environment)" >> .env && \
 	docker-compose config && \
-	docker-compose -f docker-compose-worker.yml -f env-compose.yml -p backend-$(environment) up -d --force-recreate
+	docker-compose -f docker-compose-workers.yml -f env-compose.yml -p backend-$(environment) up -d --force-recreate
 
 clear-environment-containers:
 	docker stop backend-$(environment) && docker rm backend-$(environment) || true
