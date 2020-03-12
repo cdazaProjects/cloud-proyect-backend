@@ -5,4 +5,4 @@ app_dir="${base_dir}"
 app="backend"
 
 cd "${app_dir}"
-flower -A "${app}" --broker="sqs://"  --conf="/srv/www/bin/flowerconfig.py"
+flower -A "${app}" --broker='amqp://guest:guest@rabbit//'  --conf="/srv/www/bin/flowerconfig.py"
