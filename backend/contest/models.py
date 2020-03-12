@@ -34,4 +34,4 @@ class Video(models.Model):
 class TaskManager(models.Model):
     task_name = models.CharField(max_length=50, null=False)
     begin_at = models.DateTimeField('date begin', auto_now_add=True)
-    end_at = models.DateTimeField('date end')
+    end_at = models.DateTimeField('date end', null=True)
