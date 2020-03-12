@@ -24,7 +24,7 @@ def convert_videos():
 
 @app.task(queue='son')
 def convert_video(video_id, app_label, model_name):
-    task_manager = TaskManager.objects.create(task_name='convert video: ' + video_id)
+    task_manager = TaskManager.objects.create(task_name='convert video: ' + str(video_id))
     convert_all_videos(app_label, model_name, video_id)
     task_manager.end_date = datetime.now()
 
