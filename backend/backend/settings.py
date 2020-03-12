@@ -119,10 +119,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'clouddb3',
+        'NAME': 'clouddb2',
         'USER': 'postgres',
         'PASSWORD': 'Pass123.',
-        'HOST': 'clouddb3.clkdmbaalecd.us-east-1.rds.amazonaws.com',
+        'HOST': 'clouddb2.clkdmbaalecd.us-east-1.rds.amazonaws.com',
     }
 }
 # Password validation
