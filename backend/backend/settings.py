@@ -195,7 +195,7 @@ CELERYBEAT_SCHEDULE = {
     },
     "runs-every-31-seconds": {
         "task": "contest.tasks.check_videos",
-        "schedule": timedelta(seconds=1200),
+        "schedule": timedelta(seconds=120),
         "args": ()
     },
 }
