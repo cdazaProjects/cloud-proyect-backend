@@ -119,10 +119,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'clouddb2',
+        'NAME': 'clouddb3',
         'USER': 'postgres',
         'PASSWORD': 'Pass123.',
-        'HOST': 'clouddb2.clkdmbaalecd.us-east-1.rds.amazonaws.com',
+        'HOST': 'clouddb3.clkdmbaalecd.us-east-1.rds.amazonaws.com',
     }
 }
 # Password validation
@@ -202,7 +202,7 @@ CELERYBEAT_SCHEDULE = {
 RABBIT_IP = os.environ.get('RABBIT_IP')
 RABBIT_PORT = os.environ.get('RABBIT_PORT')
 AMQP_HOST = '%s:%s' % (RABBIT_IP, RABBIT_PORT)
-BROKER_URL = 'amqp://guest:guest@rabbit//'
+BROKER_URL ='sqs://'
 
 EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 EMAIL_HOST = 'email-smtp.us-east-1.amazonaws.com'

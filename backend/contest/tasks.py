@@ -30,6 +30,7 @@ def convert_video(video_id, app_label, model_name):
     task_manager.save()
 
 
+
 @app.task(queue='check')
 def check_videos():
     videos_in_converting_process = Video.objects.filter(status="converting")
