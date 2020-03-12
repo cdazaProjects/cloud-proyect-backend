@@ -1,7 +1,7 @@
 import os
 
 # Setup RabitMQ
-BROKER_URL ='sqs://'
+BROKER_URL ='amqp://guest:guest@rabbit//'
 
 
 # Setup Address
