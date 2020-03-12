@@ -211,5 +211,5 @@ EMAIL_HOST_USER = os.environ.get('AWS_ACCESS_KEY_ID')
 EMAIL_HOST_PASSWORD = os.environ.get('AWS_SECRET_ACCESS_KEY')
 EMAIL_USE_TLS = True
 
-FRONT_URL = "http://localhost:4200/"
+FRONT_URL = "http://ec2-3-85-61-173.compute-1.amazonaws.com:8080"
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
