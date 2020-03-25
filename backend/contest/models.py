@@ -4,6 +4,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from video_encoding.fields import VideoField
 from video_encoding.models import Format
 from django.core.validators import FileExtensionValidator
+from django.core.cache import caches
 
 
 # Create your models here.
@@ -38,3 +39,18 @@ class TaskManager(models.Model):
 
     def __str__(self):
         return self.task_name + " strats_at: " + str(self.begin_at) + " end_at: " +str(self.end_at)
+
+
+def set_contest_data(contest_id, contest_data):
+    product_cache = caches['default']
+    product_cache.set(contest_id, contest_data)
+
+
+def get_contest_cache(contest_id):
+    product_cache = caches['default']
+    return product_cache.get(contest_id)
+
+
+def clear_cache():
+    product_cache = caches['default']
+    product_cache.clear()

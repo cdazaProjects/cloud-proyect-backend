@@ -118,11 +118,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'clouddb2',
-        'USER': 'postgres',
-        'PASSWORD': 'Pass123.',
-        'HOST': 'clouddb2.clkdmbaalecd.us-east-1.rds.amazonaws.com',
+        'ENGINE': 'djongo',
+        'NAME': 'clouddb',
+        'HOST': 'mongodb+srv://postgres:Pass123.@cluster0-iysjv.mongodb.net/test?retryWrites=true&w=majority'
     }
 }
 # Password validation
@@ -212,4 +210,12 @@ EMAIL_HOST_PASSWORD = os.environ.get('AWS_SECRET_ACCESS_KEY')
 EMAIL_USE_TLS = True
 
 FRONT_URL = "http://ec2-3-85-61-173.compute-1.amazonaws.com:8080"
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+CACHES = {
+    'default': {
+        'BACKEND': 'django_elasticache.memcached.ElastiCache',
+        'LOCATION': 'cache-c.draaaf.cfg.use1.cache.amazonaws.com:11211',
+        'OPTIONS': {
+            'IGNORE_CLUSTER_ERRORS': [True,False],
+        },
+    }
+}

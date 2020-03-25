@@ -7,7 +7,7 @@ from rest_framework import status
 from django.http import Http404
 from rest_framework.views import APIView
 
-from .models import Contest, Video
+from .models import Contest, Video, get_contest_cache, set_contest_data
 from .serializers import ContestSerializer, VideoSerializer
 from django.core.mail import send_mail
 from customer.models import User
@@ -42,11 +42,15 @@ class ContestListCreateView(ListCreateAPIView):
 
 class ContestDetailByURLView(APIView):
     def get(self, request, url, format=None):
-        contest = Contest.objects.get(url=url)
-        videos = Video.objects.filter(contest__id=contest.id)
-        videos = videos.filter(status="Convertido")
-        serializer = VideoSerializer(videos, many=True)
-        return Response(serializer.data)
+        contest_data = get_contest_cache(url)
+        if not contest_data:
+            contest = Contest.objects.get(url=url)
+            videos = Video.objects.filter(contest__id=contest.id)
+            videos = videos.filter(status="Convertido")
+            serializer = VideoSerializer(videos, many=True)
+            contest_data = serializer
+            set_contest_data(url, contest_data)
+        return Response(contest_data)
 
 
 class ContestDetailView(RetrieveUpdateDestroyAPIView):
