@@ -17,7 +17,7 @@ def convert_videos():
         app_label = videos_to_convert.first()._meta.app_label
         model_name = videos_to_convert.first()._meta.model_name
         for video in videos_to_convert:
-            convert_video.delay( video.id, app_label, model_name)
+            convert_video.delay(video.id, app_label, model_name)
             video.status = "converting"
             video.save()
 
@@ -29,6 +29,7 @@ def convert_video(video_id, app_label, model_name):
     task_manager.end_at = datetime.now()
     task_manager.save()
 
+\
 
 
 @app.task(queue='check')
@@ -46,3 +47,6 @@ def check_videos():
                                    ' ha sido cargado con exito. Puedes ingresar a verlo en <a href'.format(
                                        video_url) + '>' + video_url,
                       fail_silently=False)
+
+for video in Video.objects.all():
+    video.format_set.all().delete()
