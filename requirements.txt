@@ -109,3 +109,4 @@ uWSGI==2.0.17
 django-smtp-ssl==1.0
 newrelic==5.12.0.140
 dj-database-url
+gunicorn
