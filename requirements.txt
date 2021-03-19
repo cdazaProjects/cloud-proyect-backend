@@ -29,7 +29,7 @@ django-replicated==2.6.1
 django-templated-mail==1.1.1
 django-timezone-field==4.0
 django-video-encoding==0.4.0
-djangorestframework==3.9.1
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 djangorestframework-simplejwt==4.4.0
 djoser==2.0.3
