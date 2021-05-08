@@ -39,7 +39,7 @@ docutils==0.15.2
 entrypoints==0.3
 ephem==3.7.7.0
 entrypoints==0.3
-eventlet==0.23.0
+eventlet==0.31.0
 ffmpeg==1.4
 flower==0.9.2
 gevent==1.4.0
@@ -76,7 +76,7 @@ django-extensions==2.1.4
 django-celery-results==1.0.1
 flower==0.9.2
 SQLAlchemy==1.2.10
-eventlet==0.23.0
+eventlet==0.31.0
 django-celery==3.2.2
 ptyprocess==0.6.0
 pycparser==2.19
